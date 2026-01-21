@@ -1,0 +1,45 @@
+<div class="space-y-6">
+
+  <!-- Welcome and Stats Section -->
+  <div *ngIf="userStats$ | async as stats" class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800">Willkommen zurück!</h1>
+
+    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <!-- Level -->
+      <div class="p-4 bg-blue-100 rounded-lg">
+        <p class="text-sm font-medium text-blue-800">Level</p>
+        <p class="text-3xl font-bold text-blue-900">{{ stats.current_level }}</p>
+      </div>
+      <!-- Total XP -->
+      <div class="p-4 bg-green-100 rounded-lg">
+        <p class="text-sm font-medium text-green-800">Total XP</p>
+        <p class="text-3xl font-bold text-green-900">{{ stats.total_xp }}</p>
+      </div>
+      <!-- Badges -->
+      <div class="p-4 bg-yellow-100 rounded-lg">
+        <p class="text-sm font-medium text-yellow-800">Badges</p>
+        <p class="text-3xl font-bold text-yellow-900">{{ stats.badges.length }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Cards Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Daily Sprint Card -->
+    <a routerLink="/learn" class="block p-8 bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition transform">
+      <h2 class="text-2xl font-bold text-gray-800">Täglicher Sprint</h2>
+      <p class="mt-2 text-gray-600">Starte deine tägliche Lerneinheit und wiederhole fällige Karten, um dein Wissen zu festigen.</p>
+      <div class="mt-4 text-blue-600 font-semibold">Jetzt lernen →</div>
+    </a>
+
+    <!-- Boss Arena Card -->
+    <a routerLink="/boss-fight" class="block p-8 bg-gray-800 text-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition transform">
+      <h2 class="text-2xl font-bold">Boss-Arena</h2>
+      <p class="mt-2 text-gray-300">Bist du bereit für eine Herausforderung? Teste dein Wissen unter Zeitdruck und besiege den Boss.</p>
+      <div class="mt-4 text-red-500 font-semibold">Herausfordern →</div>
+    </a>
+
+  </div>
+
+</div>

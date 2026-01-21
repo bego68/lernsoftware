@@ -1,0 +1,68 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center">
+    <p class="text-xl text-gray-700">Lade Karten...</p>
+  </div>
+
+  <!-- Session Finished State -->
+  <div *ngIf="!isLoading && sessionFinished" class="text-center bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-green-600 mb-4">Super!</h2>
+    <p class="text-lg text-gray-800">Du hast alle fälligen Karten für heute gelernt. Komm morgen wieder!</p>
+    <button routerLink="/dashboard" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+      Zurück zum Dashboard
+    </button>
+  </div>
+
+  <!-- Learning Card View -->
+  <div *ngIf="!isLoading && currentCard" class="w-full max-w-2xl">
+
+    <!-- Progress Indicator -->
+    <div class="mb-4 text-center">
+      <p class="text-gray-600">Karte {{ currentIndex + 1 }} von {{ dueCards.length }}</p>
+      <div class="w-full bg-gray-300 rounded-full h-2.5 mt-1">
+        <div class="bg-blue-600 h-2.5 rounded-full" [style.width.%]="(currentIndex + 1) / dueCards.length * 100"></div>
+      </div>
+    </div>
+
+    <!-- The Card -->
+    <div class="bg-white rounded-lg shadow-2xl p-8 min-h-[300px] flex flex-col justify-center items-center text-center">
+
+      <!-- Front of the card -->
+      <div *ngIf="!showBack">
+        <h3 class="text-2xl font-semibold text-gray-800">{{ currentCard.front.text }}</h3>
+        <code *ngIf="currentCard.front.code" class="block bg-gray-800 text-white p-4 rounded-md mt-4 text-left">{{ currentCard.front.code }}</code>
+      </div>
+
+      <!-- Back of the card (revealed) -->
+      <div *ngIf="showBack">
+        <h3 class="text-2xl font-semibold text-gray-800">{{ currentCard.back.text }}</h3>
+        <code *ngIf="currentCard.back.code" class="block bg-gray-800 text-white p-4 rounded-md mt-4 text-left">{{ currentCard.back.code }}</code>
+      </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex justify-center items-center">
+
+      <!-- Reveal Answer Button -->
+      <button *ngIf="!showBack" (click)="revealCard()"
+              class="px-8 py-4 bg-blue-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-blue-700 transition">
+        Antwort anzeigen
+      </button>
+
+      <!-- Correct/Incorrect Buttons -->
+      <div *ngIf="showBack" class="flex space-x-4">
+        <button (click)="submitAnswer(false)"
+                class="px-8 py-4 bg-red-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-700 transition">
+          Falsch
+        </button>
+        <button (click)="submitAnswer(true)"
+                class="px-8 py-4 bg-green-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-green-700 transition">
+          Richtig
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
