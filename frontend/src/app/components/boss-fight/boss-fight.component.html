@@ -1,0 +1,69 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+
+  <!-- Intro State -->
+  <div *ngIf="gameState === 'intro'" class="text-center">
+    <h1 class="text-5xl font-bold text-red-500 mb-4">Boss-Arena</h1>
+    <p class="text-xl mb-8">Stelle dich dem Wissens-Titanen! Du hast 3 Minuten Zeit, um ihn zu besiegen.</p>
+    <button (click)="startFight()" class="px-10 py-4 bg-red-600 text-white text-2xl font-bold rounded-lg shadow-lg hover:bg-red-700 transition transform hover:scale-105">
+      Kampf beginnen!
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="gameState === 'loading'">
+    <p class="text-2xl animate-pulse">Der Boss erwacht...</p>
+  </div>
+
+  <!-- Fighting State -->
+  <div *ngIf="gameState === 'fighting' && currentCard" class="w-full max-w-4xl">
+
+    <!-- Boss HP Bar -->
+    <div class="mb-4">
+      <p class="text-center text-lg font-bold text-red-400">Boss HP</p>
+      <div class="w-full bg-gray-700 rounded-full h-8 border-2 border-red-500">
+        <div class="bg-red-600 h-full rounded-full transition-all duration-500" [style.width.%]="bossHpPercentage"></div>
+      </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="text-center text-4xl font-mono font-bold text-yellow-400 my-4">
+      {{ timeLeft | number:'3.0-0' }}s
+    </div>
+
+    <!-- Card -->
+    <div class="bg-gray-800 rounded-lg shadow-2xl p-8 min-h-[300px] flex flex-col justify-center items-center text-center border-2 border-gray-600">
+      <div *ngIf="!showBack">
+        <h3 class="text-2xl">{{ currentCard.front.text }}</h3>
+      </div>
+      <div *ngIf="showBack">
+        <h3 class="text-2xl">{{ currentCard.back.text }}</h3>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-8 flex justify-center">
+      <button *ngIf="!showBack" (click)="showBack = true" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-lg">
+        Antwort anzeigen
+      </button>
+      <div *ngIf="showBack" class="flex space-x-4">
+        <button (click)="submitAnswer(false)" class="px-8 py-4 bg-red-700 text-white font-bold rounded-lg">Falsch</button>
+        <button (click)="submitAnswer(true)" class="px-8 py-4 bg-green-600 text-white font-bold rounded-lg">Richtig</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Won State -->
+  <div *ngIf="gameState === 'won'" class="text-center">
+    <h1 class="text-6xl font-bold text-green-500 mb-4">Sieg!</h1>
+    <p class="text-2xl mb-8">Du hast den Boss besiegt und 1000 XP verdient!</p>
+    <a routerLink="/dashboard" class="px-8 py-3 bg-blue-600 text-white rounded-lg">Zurück zum Dashboard</a>
+  </div>
+
+  <!-- Lost State -->
+  <div *ngIf="gameState === 'lost'" class="text-center">
+    <h1 class="text-6xl font-bold text-gray-500 mb-4">Niederlage</h1>
+    <p class="text-2xl mb-8">Der Boss war zu stark. Lerne weiter und versuche es erneut!</p>
+    <a routerLink="/dashboard" class="px-8 py-3 bg-blue-600 text-white rounded-lg">Zurück zum Dashboard</a>
+  </div>
+
+</div>
