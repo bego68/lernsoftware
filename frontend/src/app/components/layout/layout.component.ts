@@ -7,8 +7,7 @@ import { AuthService } from '../../core/auth.service';
   selector: 'app-layout',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  templateUrl: './layout.component.html'
 })
 export class LayoutComponent {
 

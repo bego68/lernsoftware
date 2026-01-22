@@ -10,8 +10,7 @@ type GameState = 'loading' | 'intro' | 'fighting' | 'won' | 'lost';
   selector: 'app-boss-fight',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './boss-fight.component.html',
-  styleUrls: ['./boss-fight.component.scss']
+  templateUrl: './boss-fight.component.html'
 })
 export class BossFightComponent implements OnInit, OnDestroy {
 
