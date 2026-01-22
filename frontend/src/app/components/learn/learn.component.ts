@@ -6,8 +6,7 @@ import { ApiService, Card } from '../../core/api.service';
   selector: 'app-learn',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './learn.component.html',
-  styleUrls: ['./learn.component.scss']
+  templateUrl: './learn.component.html'
 })
 export class LearnComponent implements OnInit {
 
