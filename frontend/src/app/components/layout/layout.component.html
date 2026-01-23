@@ -1,44 +1,53 @@
-<div class="min-h-screen bg-gray-100">
-  <!-- Header -->
-  <header class="bg-white shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
+<mat-sidenav-container class="sidenav-container">
 
-        <!-- Logo and Main Navigation -->
-        <div class="flex items-center space-x-8">
-          <div class="text-2xl font-bold text-blue-600">APT-Erfolg</div>
-          <nav class="hidden md:flex space-x-4">
-            <a routerLink="/dashboard" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-               class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
-              Dashboard
-            </a>
-            <a routerLink="/learn" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-               class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
-              Lernen
-            </a>
-            <a routerLink="/boss-fight" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-               class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
-              Boss Arena
-            </a>
-          </nav>
-        </div>
-
-        <!-- Logout Button -->
-        <div>
-          <button (click)="logout()"
-                  class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
-            Abmelden
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </header>
+  <!-- Sidenav (Mobile Menu) -->
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" (click)="drawer.close()">Dashboard</a>
+      <a mat-list-item routerLink="/learn" (click)="drawer.close()">Lernen</a>
+      <a mat-list-item routerLink="/boss-fight" (click)="drawer.close()">Boss Arena</a>
+    </mat-nav-list>
+  </mat-sidenav>
 
   <!-- Main Content -->
-  <main>
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <span>APT-Erfolg</span>
+
+      <span class="flex-auto"></span>
+
+      <!-- Desktop Navigation -->
+      <nav *ngIf="(isHandset$ | async) === false">
+        <a mat-button routerLink="/dashboard">Dashboard</a>
+        <a mat-button routerLink="/learn">Lernen</a>
+        <a mat-button routerLink="/boss-fight">Boss Arena</a>
+      </nav>
+
+      <button mat-icon-button (click)="logout()" aria-label="Logout">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+    <!-- This is where the routed content will be displayed -->
+    <div class="container">
       <router-outlet></router-outlet>
     </div>
-  </main>
-</div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -16,6 +16,10 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     """
     Endpoint to register a new user.
     """
+    # bcrypt has a maximum password length of 72 bytes
+    if len(user.password.encode('utf-8')) > 72:
+        raise HTTPException(status_code=400, detail="Password cannot be longer than 72 characters.")
+
     db_user_by_email = crud.get_user_by_email(db, email=user.email)
     if db_user_by_email:
         raise HTTPException(status_code=400, detail="Email already registered")
